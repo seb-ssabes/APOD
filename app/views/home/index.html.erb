@@ -1,0 +1,6 @@
+<div class="container mx-auto p-4">
+  <h1 class="font-bold text-4xl"><%= @apod_data['title'] %></h1>
+  <p class="text-sm text-gray-500"><%= @apod_data['date'] %></p>
+  <img src="<%= @apod_data['url'] %>" class="w-full rounded shadow-md">
+  <p class="mt-4"><%= @apod_data['explanation'] %></p>
+</div>
