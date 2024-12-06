@@ -11,7 +11,7 @@ class SearchController < ApplicationController
     @apod_data = fetch_data
 
     filtered_results = @apod_data.select do |item|
-      item['title'].include?(query) || item['explanation'].include?(query) || item['copyright'].include?(query)
+      item['title'].to_s.include?(query) || item['explanation'].to_s.include?(query) || item['copyright'].to_s.include?(query)
     end
 
     render json: filtered_results.first(5)
