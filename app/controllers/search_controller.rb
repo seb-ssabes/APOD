@@ -14,14 +14,19 @@ class SearchController < ApplicationController
       item['title'].to_s.include?(query) || item['explanation'].to_s.include?(query) || item['copyright'].to_s.include?(query)
     end
 
-    render json: filtered_results.first(5)
+    total_matches = filtered_results.size
+
+    render json: {
+      total_matches: total_matches,
+      results: filtered_results.first(8)
+    }
   end
 
   private
 
   def fetch_data
     api_key = Rails.application.credentials.dig(:APOD, :api_key)
-    url = "https://api.nasa.gov/planetary/apod?api_key=#{api_key}&count=20"
+    url = "https://api.nasa.gov/planetary/apod?api_key=#{api_key}&count=30"
 
     response = URI.open(url).read
     JSON.parse(response)

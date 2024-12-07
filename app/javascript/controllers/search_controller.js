@@ -16,7 +16,9 @@ export default class extends Controller {
       })
       .then((response) => response.json())
       .then((data) => {
-        this.updateResults(data)
+        console.log(`Total matches:${data.total_matches}`)
+        this.displayTotal(data.total_matches)
+        this.updateResults(data.results)
       })
     }
   }
@@ -26,7 +28,7 @@ export default class extends Controller {
     resultsContainer.innerHTML = data.map((item) => {
 
       const truncatedExplanation = item.explanation ? item.explanation.split(" ").slice(0, 20).join(' ') + "..." : "";
-      const youtubeIcon = `<i class="fa-brands fa-square-youtube text-red-400 text-3xl"></i>`
+      const youtubeIcon = `<i class="fa-brands fa-square-youtube text-red-400 text-3xl w-16 h-16 object-cover rounded-md"></i>`
       const imageTag = `<img src="${item.url}" class="w-16 h-16 object-cover rounded-md">`
       const conditionalImage = item.url.includes("youtube") || item.url.includes("vimeo") ? youtubeIcon : imageTag;
 
@@ -42,5 +44,10 @@ export default class extends Controller {
           </div>
         </div>`
     }).join("");
+  }
+
+  displayTotal(totalMatches) {
+    const totalMatchesContainer = document.querySelector('#total-matches');
+    totalMatchesContainer.textContent = `Total matches: ${totalMatches}`
   }
 }
