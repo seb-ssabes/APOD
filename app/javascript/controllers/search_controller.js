@@ -1,36 +1,62 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['input']
+  static targets = ['input', 'searchResults', 'pagination', 'totalMatches']
 
-  submitSearch(event) {
+  connect() {
+    this.cachedResults = [];
+    this.currentQuery = "";
+  }
+
+  submitSearch(event, page = 1) {
     event.preventDefault();
 
     const query = this.inputTarget.value.trim().toLowerCase();
     if (query.length > 0) {
-      fetch(`/search/api_search?query=${encodeURIComponent(query)}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(`Total matches:${data.total_matches}`)
-        this.displayTotal(data.total_matches)
-        this.updateResults(data.results)
-      })
+      if(query !== this.currentQuery) {
+        fetch(`/search/api_search?query=${encodeURIComponent(query)}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          this.cachedResults = data.results
+          this.totalMatches = data.total_matches;
+          this.currentQuery = query
+          this.displayTotal(data.total_matches);
+
+          const totalPages = Math.ceil(data.total_matches / 5);
+          this.updateResults(this.paginateResults(this.cachedResults, page));
+          this.updatePagination(totalPages, page, query);
+
+          console.log("Fetched results:", data.results);
+          console.log("Total matches:", data.total_matches);
+          console.log("Current query:", this.currentQuery)
+        });
+      } else {
+        const totalPages = data.total_matches > 0 ? Math.ceil(data.total_matches / 5) : 1;
+        this.updateResults(this.paginateResults(this.cachedResults, page));
+        this.updatePagination(totalPages, page, query)
+      }
     }
   }
 
+  paginateResults(results, page) {
+    const itemsPerPage = 5;
+    const startIndex = (page - 1) * itemsPerPage;
+    return results.slice(startIndex, startIndex + itemsPerPage)
+
+  }
+
   updateResults(data) {
-    const resultsContainer = document.querySelector("#search-results");
-    resultsContainer.innerHTML = data.map((item) => {
+    this.searchResultsTarget.innerHTML = data.map((item) => {
 
       const truncatedExplanation = item.explanation ? item.explanation.split(" ").slice(0, 20).join(' ') + "..." : "";
       const youtubeIcon = `
         <div class="w-16 h-16 flex items-center justify-center rounded-md">
-          <i class="fa-brands fa-square-youtube text-red-400" style="font-size: 4rem;"></i>
+          <i class="fa-brands fa-square-youtube text-red-400" style="font-size: 4.5rem;"></i>
         </div>
         `;
       const imageTag = `<img src="${item.url}" class="w-16 h-16 object-cover rounded-md">`;
@@ -51,7 +77,38 @@ export default class extends Controller {
   }
 
   displayTotal(totalMatches) {
-    const totalMatchesContainer = document.querySelector('#total-matches');
-    totalMatchesContainer.textContent = `Total matches: ${totalMatches}`
+    this.totalMatchesTarget.textContent = `Total matches: ${totalMatches}`
+  }
+
+  updatePagination(totalPages, currentPage, query) {
+    if(totalPages <= 1) {
+      this.paginationTarget.innerHTML = "";
+      return
+    }
+
+    const buttons = Array.from({length: totalPages}, (_, i) => {
+      const page = i + 1;
+      return `
+        <button
+          class="btn px-3 py-1 rounded ${page === currentPage ? 'bg-gray-500 text-white' : 'bg-gray-200'}"
+          data-page="${page}"
+          data-search-target="pageButton"
+          data-query="${query}">
+          ${page}
+        </button>
+      `
+    }).join("");
+
+    this.paginationTarget.innerHTML = buttons;
+
+    const pageButtons = this.paginationTarget.querySelectorAll("button")
+
+    pageButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const page = parseInt(e.target.dataset.page, 10);
+        this.updateResults(this.paginateResults(this.cachedResults, page));
+        this.updatePagination(totalPages, page, query);
+      })
+    })
   }
 }

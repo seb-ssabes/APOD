@@ -1,8 +1,8 @@
-<div class="search-container">
+<div class="search-container"
+     data-controller="search">
   <h1 class="font-bold text-4xl text-center">Search on APOD's Archive</h1>
 
   <form class="search-form items w-full max-w-md mx-auto p-4 bg-white rounded-lg shadow-md"
-        data-controller="search"
         data-action="submit->search#submitSearch">
     <input type="text"
            data-search-target="input"
@@ -15,9 +15,9 @@
     </button>
   </form>
 
-  <div id="total-matches" class="text-gray-600 mt-4"></div>
-  <div id="search-results" class="mt-4 flex flex-col items-center mx-96">
-  </div>
+  <div data-search-target="totalMatches" class="text-gray-600 mt-4"></div>
+  <div data-search-target="searchResults" class="mt-4 flex flex-col items-center mx-96"></div>
+  <div data-search-target="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
 
   <div class="flex justify-center mt-8">
     <%= link_to "Today's Picture", root_path, class:"btn ml-3" %>
