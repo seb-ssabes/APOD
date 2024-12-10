@@ -22,16 +22,16 @@ export default class extends Controller {
         })
         .then((response) => response.json())
         .then((data) => {
-          this.cachedResults = data.results
+          this.cachedResults = data.filtered_results;
           this.totalMatches = data.total_matches;
           this.currentQuery = query
           this.displayTotal(data.total_matches);
 
-          const totalPages = Math.ceil(data.total_matches / 5);
+          const totalPages = Math.ceil(this.totalMatches / 5);
           this.updateResults(this.paginateResults(this.cachedResults, page));
           this.updatePagination(totalPages, page, query);
 
-          console.log("Fetched results:", data.results);
+          console.log("Fetched filtered results:", data.filtered_results);
           console.log("Total matches:", data.total_matches);
           console.log("Current query:", this.currentQuery)
         });
@@ -44,10 +44,11 @@ export default class extends Controller {
   }
 
   paginateResults(results, page) {
+    if(!results || results.length === 0) return [];
+
     const itemsPerPage = 5;
     const startIndex = (page - 1) * itemsPerPage;
     return results.slice(startIndex, startIndex + itemsPerPage)
-
   }
 
   updateResults(data) {

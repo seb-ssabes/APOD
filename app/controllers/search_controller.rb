@@ -8,8 +8,6 @@ class SearchController < ApplicationController
 
   def api_search
     query = params[:query].downcase
-    page = params[:page].to_i.nonzero? || 1
-    per_page = params[:per_page].to_i.nonzero? || 5
 
     @apod_data = fetch_data
 
@@ -17,14 +15,9 @@ class SearchController < ApplicationController
       item['title'].to_s.include?(query) || item['explanation'].to_s.include?(query) || item['copyright'].to_s.include?(query)
     end
 
-    total_matches = filtered_results.size
-    paginated_results = filtered_results.slice((page - 1) * per_page, per_page) || []
-
     render json: {
-      results: paginated_results,
-      total_matches: total_matches,
-      total_pages: (total_matches / per_page.to_f).ceil,
-      curren_page: page
+      filtered_results: filtered_results,
+      total_matches: filtered_results.size,
     }
 
   rescue => e
