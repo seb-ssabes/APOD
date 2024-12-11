@@ -1,26 +1,31 @@
-<div class="container mx-auto p-4 mb-10">
-  <h1>Nasa's Astronomy Picture of the Day Archive</h1>
-  <div>
-    <%= link_to "Todays' Picture", root_path %>
-    <%= link_to "Search (home)", root_path %>
-  </div>
-  <div class="flex justify-center mb-10 flex-col">
+<div class="h-screen bg-gray-50">
+  <header>
+    <div class="container mx-auto p-4 text-center">
+      <h1 class="font-bold text-4xl">Astronomy Picture of the Day</h1>
+      <h2 class="font-bold text-xl text-gray-400">Archive</h2>
+    </div>
+  </header>
 
-    <div class="my-8">
-      <% @apod_data.each do |data| %>
-        <div class="border-b pb-2 mb-4">
-          <p><%= data['date'] %>: <%= link_to data["title"], apod_date_path(data['date']), class: "text-gray-500 hover:underline" %></p>
+  <div class="flex flex-col items-center justify-between">
+    <div class="grid grid-cols-2 gap-6 w-full max-w-6xl px-4 flex-grow">
+      <% @apod_data.each_slice(15).to_a.each_with_index do |group, index| %>
+        <div>
+          <% group.each do |data| %>
+            <div class="border-b pb-2 mb-2">
+              <p>
+                <%= data['date'] %>:
+                <%= link_to data["title"], apod_date_path(data['date']), class: "text-gray-500 hover:underline" %>
+              </p>
+            </div>
+          <% end %>
         </div>
       <% end %>
+      </div>
+      <div class="flex flex-row my-4">
+        <%= link_to "Previous 30 days", archives_path(page: params[:page].to_i + 1), class: "btn" %>
+        <% if params[:page].to_i > 0 %>
+          <%= link_to "Next 30 days", archives_path(page: params[:page].to_i - 1), class: "btn ml-3" %>
+        <% end %>
     </div>
-
-    <div class="flex justify-center mt-8">
-      <%= link_to "Previous 30 days", archives_path(page: params[:page].to_i + 1), class: "btn" %>
-      <%= link_to "Today's Picture", root_path, class:"btn ml-3" %>
-      <% if params[:page].to_i > 0 %>
-        <%= link_to "Next 30 days", archives_path(page: params[:page].to_i - 1), class: "btn ml-3" %>
-      <% end %>
-    </div>
-
   </div>
 </div>
