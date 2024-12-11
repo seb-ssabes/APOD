@@ -1,42 +1,71 @@
-<div class="container mx-auto p-4 mb-10">
-  <h1 class="font-bold text-4xl text-center"><%= @apod_data['title'] %></h1>
-  <p class="text-sm text-gray-500 text-center"><%= @apod_data['date'] %></p>
+<div class="relative h-screen bg-gray-50">
+  <header class="fixed top-0 left-0 right-0 z-10">
+    <div class="container mx-auto p-4 text-center">
+      <h1 class="font-bold text-4xl">Astronomy Picture of the Day</h1>
+      <h2 class="font-bold text-xl text-gray-400">By NASA</h2>
+    </div>
+  </header>
 
-  <% if @apod_data['url'].include?("youtube")  %>
-    <iframe class="m-auto w-4/5 h-[60vw] max-w-[500px] max-h-[500px] rounded shadow-md my-5" src="<%= @apod_data['url'] %>"></iframe>
-  <% else %>
-    <img src="<%= @apod_data['url'] %>" class="rounded shadow-md mx-auto my-5 w-1/2 h-1/2">
-  <% end %>
+  <div class="flex h-screen items-center justify-center mx-5">
+    <div class="flex basis-1/2 justify-center items-center">
+      <% if @apod_data['url'].include?("youtube")  %>
+        <iframe
+          class="w-full max-w-3xl h-auto rounded-md shadow-sm"
+          src="<%= @apod_data['url'] %>">
+        </iframe>
+      <% else %>
+        <img
+          class="object-cover rounded-md shadow-sm w-full max-w-3xl h-auto"
+          src="<%= @apod_data['url'] %>">
+      <% end %>
+    </div>
 
-  <h3 class="font-bold text-2xl text-gray-500 text-center">Image credit and copyright: <%= @apod_data['copyright'] %></h3>
+    <div class="flex-1 flex-col basis-1/2 text-left px-6 mr-10">
+      <h1 class="font-bold text-3xl text-center"><%= @apod_data['title'] %></h1>
+      <p class="text-sm text-gray-500"><%= @apod_data['date'] %></p>
 
-  <div class="h-52 overflow-hidden mt-4 text-justify">
-    <span data-controller="typed" data-typed-strings-value='["<%= @apod_data['explanation'] %>"]'>
-      <%= @apod_data['explanation'] %>
-    </span>
+      <% if @apod_data['copyright'] %>
+        <h3 class="font-bold text-lg text-gray-500 mt-4">Image credit and copyright: <%= @apod_data['copyright'] %></h3>
+      <% end %>
+
+      <p class="overflow-hidden mt-4 text-justify text-gray-700">
+        <span
+          data-controller="typed"
+          data-typed-strings-value='["<%= @apod_data['explanation'] %>"]'>
+          <%= @apod_data['explanation'] %>
+        </span>
+      </p>
+    </div>
   </div>
 
-  <div class="flex justify-center mb-10">
-    <a href="<%= apod_date_path((@apod_data['date'].to_date - 1).to_s) %>" class="btn">
-      <svg class="w-3.5 h-3.5 me-2" fill="none" viewBox="0 0 14 10">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-      </svg>
-      Previous
-    </a>
-
-    <%= link_to "Archive", archives_path, class:"btn ml-3" %>
-
-    <%= link_to "Search", search_path, class:"btn ml-3" %>
-
-    <% if @apod_data['date'].to_date < Date.today  %>
-      <a href="<%= apod_date_path((@apod_data['date'].to_date + 1).to_s) %>" class="btn ml-3">
-        Next
-        <svg class="w-3.5 h-3.5 ms-2" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-        </svg>
-      </a>
-    <% else %>
-      <div class="ml-24"></div>
-    <% end %>
-  </div>
 </div>
+
+
+<footer class="fixed bottom-0 left-0 right-0 bg-white z-10">
+  <nav class="container mx-auto p-4 flex justify-center">
+    <ul class="flex gap-4">
+      <li>
+        <a href="<%= apod_date_path((@apod_data['date'].to_date - 1).to_s) %>" class="btn">
+          <svg class="w-3.5 h-3.5 me-2" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+          </svg>
+          Previous
+        </a>
+      </li>
+      <li><%= link_to "Archive", archives_path, class:"btn ml-3" %></li>
+      <li><%= link_to "Search", search_path, class:"btn ml-3" %></li>
+      <li>
+        <% if @apod_data['date'].to_date < Date.today  %>
+          <a href="<%= apod_date_path((@apod_data['date'].to_date + 1).to_s) %>" class="btn ml-3">
+            Next
+            <svg class="w-3.5 h-3.5 ms-2" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </a>
+        <% else %>
+          <div class="ml-24"></div>
+        <% end %>
+      </li>
+    </ul>
+  </nav>
+</footer>

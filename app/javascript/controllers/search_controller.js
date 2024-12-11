@@ -24,7 +24,7 @@ export default class extends Controller {
         .then((data) => {
           this.cachedResults = data.filtered_results;
           this.totalMatches = data.total_matches;
-          this.currentQuery = query
+          this.currentQuery = query;
           this.displayTotal(data.total_matches);
 
           const totalPages = Math.ceil(this.totalMatches / 5);
@@ -64,7 +64,7 @@ export default class extends Controller {
       const conditionalImage = item.url.includes("youtube") || item.url.includes("vimeo") ? youtubeIcon : imageTag;
 
       return `
-        <div class="search-result flex flex-row items-center gap-4 border-b pb-2 mb-4 w-full">
+        <div class="search-result flex flex-row items-center gap-4 border-b pb-2 mb-2 w-full">
           <div class="media flex-shrink-0">${conditionalImage}</div>
           <div class="text-start w-full flex flex-col">
             <h3 class="text-lg font-bold text-gray-700">
