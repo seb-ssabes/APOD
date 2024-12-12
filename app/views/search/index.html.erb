@@ -1,24 +1,34 @@
-<div class="search-container"
-     data-controller="search">
-  <h1 class="font-bold text-4xl text-center">Search on APOD's Archive</h1>
+<div class="h-screen bg-gray-50" data-controller="search">
+  <header>
+    <div class="container mx-auto p-4 text-center">
+      <h1 class="font-bold text-4xl">Astronomy Picture of the Day</h1>
+      <h2 class="font-bold text-xl text-gray-400">Search</h2>
+    </div>
+  </header>
 
-  <form class="search-form items w-full max-w-md mx-auto p-4 bg-white rounded-lg shadow-md"
-        data-action="submit->search#submitSearch">
-    <input type="text"
-           data-search-target="input"
-           placeholder="Search by title, description or copyright..."
-           autocomplete="off"
-           class="w-full px-3 py-2 border rounded"/>
-    <button type="submit"
-            class="px-4 py-2 bg-gray-500 text-white rounded-r hover:bg-gray-600">
-      Search
-    </button>
-  </form>
+  <div class="relative w-full max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
+    <form class="search-form items"
+          data-action="submit->search#submitSearch">
+      <div class="relative">
+        <button type="submit"
+                class="px-0.5 py-2 text-gray-400 rounded-r absolute left-3 top-1/2 transform -translate-y-1/2">
+          <i class="fa-solid fa-magnifying-glass hover:text-gray-200"></i>
+        </button>
+        <input type="text"
+              data-search-target="input"
+              placeholder="By title, description or copyright..."
+              autocomplete="off"
+              class="w-full pr-3 pl-11 py-2 border border-gray-300 rounded outline-none focus:ring-0 hover:border-gray-400 focus:border-gray-600"/>
+      </div>
+    </form>
+  </div>
 
   <div data-search-target="totalMatches" class="text-gray-600 mt-4"></div>
   <div data-search-target="searchResults" class="mt-4 flex flex-col items-center mx-96"></div>
   <div data-search-target="pagination" class="mt-4 flex justify-center items-center gap-2"></div>
+
 </div>
+
 
 <footer class="fixed bottom-0 left-0 right-0 bg-white z-10">
   <nav class="container mx-auto p-4 flex justify-center">

@@ -6,7 +6,7 @@
     </div>
   </header>
 
-  <div class="flex flex-col items-center justify-between">
+  <div class="flex flex-col items-center justify-between mt-4">
     <div class="grid grid-cols-2 gap-6 w-full max-w-6xl px-4 flex-grow">
       <% @apod_data.each_slice(15).to_a.each_with_index do |group, index| %>
         <div>
@@ -21,7 +21,7 @@
         </div>
       <% end %>
       </div>
-      <div class="flex flex-row my-4">
+      <div class="flex flex-row my-6">
         <%= link_to "Previous 30 days", archives_path(page: params[:page].to_i + 1), class: "btn" %>
         <% if params[:page].to_i > 0 %>
           <%= link_to "Next 30 days", archives_path(page: params[:page].to_i - 1), class: "btn ml-3" %>
