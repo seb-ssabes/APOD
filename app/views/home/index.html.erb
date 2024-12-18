@@ -1,4 +1,4 @@
-<div class="h-screen flex flex-col bg-gray-50">
+<div class="h-screen flex flex-col bg-gray-50" data-controller="zoom">
   <header class="flex-none text-center mt-6">
     <h1 class="font-bold text-4xl mb-1">Astronomy Picture of the Day</h1>
     <h2 class="font-bold text-xl text-gray-400">By NASA</h2>
@@ -6,7 +6,7 @@
 
   <div class="flex-grow flex items-center justify-center">
     <div class="flex w-full max-w-fit items-center gap-10 px-6 mx-10">
-      <div class="w-1/2 aspect-video overflow-hidden rounded-md shadow-sm">
+      <div class="w-1/2 aspect-video overflow-hidden rounded-md shadow-sm" data-action="click->zoom#open">
         <% if @apod_data['url'].include?("youtube") %>
           <iframe
             class="w-full h-full"
@@ -17,7 +17,8 @@
           <img
             class="object-cover w-full h-full"
             src="<%= @apod_data['url'] %>"
-            alt="APOD Image">
+            alt="APOD Image"
+            data-zoom-target="image">
         <% end %>
       </div>
 
@@ -31,9 +32,9 @@
           </p>
         <% end %>
 
-        <p class="text-justify text-gray-700">
+        <span data-controller="typed" data-typed-strings-value='["<%= j @apod_data['explanation'] %>"]'>
           <%= @apod_data['explanation'] %>
-        </p>
+        </span>
       </div>
     </div>
   </div>
@@ -52,6 +53,7 @@
         </li>
         <li><%= link_to "Archive", archives_path, class:"btn ml-3" %></li>
         <li><%= link_to "Search", search_path, class:"btn ml-3" %></li>
+        <li><%= link_to "Zoom", root_path, class:"btn ml-3", data: {action: "click->zoom#open"} %></li>
         <li>
           <% if @apod_data['date'].to_date < Date.today  %>
             <a href="<%= apod_date_path((@apod_data['date'].to_date + 1).to_s) %>" class="btn ml-3">
@@ -67,4 +69,16 @@
       </ul>
     </nav>
   </footer>
+
+  <div data-zoom-target="modal"
+      <%# data-action="click->zoom#close" %>
+      class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm items-center justify-center flex hidden">
+    <div class="relative">
+      <img
+        class="max-w-screen-lg max-h-screen-lg object-contain"
+        src="<%= @apod_data['url'] %>"
+        data-zoom-target="zoomedImage">
+    </div>
+    <%= link_to "X", class:"btn ml-3", data: {action: "click->zoom#close"} %>
+  </div>
 </div>
