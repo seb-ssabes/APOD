@@ -32,7 +32,9 @@
           </p>
         <% end %>
 
-        <span data-controller="typed" data-typed-strings-value='["<%= j @apod_data['explanation'] %>"]'>
+        <span data-controller="typed"
+              data-typed-strings-value='["<%= j @apod_data['explanation'] %>"]'
+              data-typed-initialized="false">
           <%= @apod_data['explanation'] %>
         </span>
       </div>
@@ -71,14 +73,13 @@
   </footer>
 
   <div data-zoom-target="modal"
-      <%# data-action="click->zoom#close" %>
-      class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm items-center justify-center flex hidden">
+      data-action="click->zoom#close"
+      class="fixed inset-0 bg-black bg-opacity-85 backdrop-blur-md items-center justify-center hidden">
     <div class="relative">
       <img
-        class="max-w-screen-lg max-h-screen-lg object-contain"
+        class="w-auto h-auto max-w-[calc(100vw-4rem)] max-h-[calc(100vh-4rem)] object-contain"
         src="<%= @apod_data['url'] %>"
         data-zoom-target="zoomedImage">
     </div>
-    <%= link_to "X", class:"btn ml-3", data: {action: "click->zoom#close"} %>
   </div>
 </div>

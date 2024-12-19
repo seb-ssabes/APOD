@@ -5,18 +5,18 @@ export default class extends Controller {
 
   open(e) {
     e.preventDefault();
-    
+
     this.modalTarget.classList.remove("hidden");
     this.modalTarget.classList.add("flex");
 
-    // if (this.hasImageTarget) {
-    //   const src = this.imageTarget.getAttribute("src");
-    //   this.zoomedImageTarget.setAttribute("src", src)
-    // }
+    if (this.hasImageTarget) {
+      const src = this.imageTarget.getAttribute("src");
+      this.zoomedImageTarget.setAttribute("src", src)
+    }
   }
 
   close(e) {
-    if (e.target === this.ModalTarget) {
+    if (e.target === this.ModalTarget || e.target.dataset.action === "click->zoom#close") {
       this.modalTarget.classList.add("hidden");
       this.modalTarget.classList.remove("flex")
     }

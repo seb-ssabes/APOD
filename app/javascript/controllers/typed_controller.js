@@ -6,13 +6,19 @@ export default class extends Controller {
 
   connect() {
     this.element.textContent = "";
-    
-    new Typed(this.element, {
-    strings: this.stringsValue,
-    typeSpeed: 5,
-    backSpeed: 0,
-    loop: false,
-    showCursor: false,
+
+    if (this.element.dataset.typedInitialized === "true") {
+      return;
+    }
+
+    this.typed = new Typed(this.element, {
+      strings: this.stringsValue,
+      typeSpeed: 5,
+      backSpeed: 0,
+      loop: false,
+      showCursor: false,
     });
+
+    this.element.dataset.typedInitialized = "true";
   }
 }
