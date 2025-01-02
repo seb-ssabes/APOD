@@ -11,5 +11,6 @@ class HomeController < ApplicationController
 
     response = URI.open(url).read
     @apod_data = JSON.parse(response)
+    Rails.logger.info "APOD Data: #{@apod_data.inspect}"
   end
 end
