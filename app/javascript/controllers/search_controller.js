@@ -6,6 +6,7 @@ export default class extends Controller {
   connect() {
     this.cachedResults = [];
     this.currentQuery = "";
+    console.log('Search');
   }
 
   submitSearch(event, page = 1) {
