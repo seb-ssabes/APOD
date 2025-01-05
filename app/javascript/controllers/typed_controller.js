@@ -14,7 +14,7 @@ export default class extends Controller {
 
     this.typed = new Typed(this.outputTarget, {
       strings: this.stringsValue,
-      typeSpeed: 50,
+      typeSpeed: 100,
       backSpeed: 0,
       loop: false,
       showCursor: false,

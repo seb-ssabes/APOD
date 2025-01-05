@@ -5,17 +5,20 @@
   </header>
 
   <div class="flex-grow flex items-center justify-center">
-    <div class="flex w-full max-w-fit items-center gap-10 px-6 mx-10">
+
+    <div class="flex items-stretch ml-3 w-1/2 group relative">
 
       <a href="<%= apod_date_path((@apod_data['date'].to_date - 1).to_s) %>"
-        class="h-full flex items-center justify-center bg-gray-800 hover:bg-gray-700 text-white w-12"
+        class="flex items-center justify-center text-gray-500 bg-white border
+             border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-700 w-12
+               opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         aria-label="Previous">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </a>
-      
-      <div class="w-1/2 aspect-video overflow-hidden rounded-md shadow-sm" data-action="click->zoom#open">
+
+      <div class="w-auto aspect-video overflow-hidden rounded-md shadow-sm mx-4" data-action="click->zoom#open">
         <% if @apod_data['url'].include?("youtube") %>
           <iframe
             class="w-full h-full"
@@ -33,24 +36,23 @@
 
       <% if @apod_data['date'].to_date < Date.today %>
         <a href="<%= apod_date_path((@apod_data['date'].to_date + 1).to_s) %>"
-          class="h-full flex items-center justify-center bg-gray-800 hover:bg-gray-700 text-white w-12"
+          class="flex items-center justify-center text-gray-500 bg-white border
+               border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-700 w-12
+                 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           aria-label="Next">
           <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </a>
       <% end %>
+    </div>
 
+    <div class="w-1/2 text-left">
+      <h1 class="font-bold text-3xl mb-2 text-center"><%= @apod_data['title'] %></h1>
+      <p class="text-sm text-gray-500 mb-4 text-center"><%= @apod_data['date'] %></p>
 
-      <div class="w-1/2 text-left">
-        <h1 class="font-bold text-3xl mb-2 text-center"><%= @apod_data['title'] %></h1>
-        <p class="text-sm text-gray-500 mb-4 text-center"><%= @apod_data['date'] %></p>
-
-        <div>
-          <%= @apod_data['explanation'] %>
-        </div>
-
-
+      <div class="px-8">
+        <%= @apod_data['explanation'] %>
         <% if @apod_data['copyright'].present? %>
           <% if @apod_data['copyright'].include?(",") %>
             <div class="font-bold text-lg text-gray-500 mb-4">
@@ -67,38 +69,21 @@
             </div>
           <% end %>
         <% end %>
-
       </div>
+
+
+
     </div>
+
   </div>
 
 
   <footer class="flex-none py-4">
     <nav class="container mx-auto flex justify-center">
       <ul class="flex gap-4">
-        <li>
-          <a href="<%= apod_date_path((@apod_data['date'].to_date - 1).to_s) %>" class="btn">
-            <svg class="w-3.5 h-3.5 me-2" fill="none" viewBox="0 0 14 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-            </svg>
-            Previous
-          </a>
-        </li>
         <li><%= link_to "Archive", archives_path, class:"btn ml-3" %></li>
         <li><%= link_to "Search", search_path, class:"btn ml-3" %></li>
         <li><%= link_to "Zoom", root_path, class:"btn ml-3", data: {action: "click->zoom#open"} %></li>
-        <li>
-          <% if @apod_data['date'].to_date < Date.today  %>
-            <a href="<%= apod_date_path((@apod_data['date'].to_date + 1).to_s) %>" class="btn ml-3">
-              Next
-              <svg class="w-3.5 h-3.5 ms-2" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-              </svg>
-            </a>
-          <% else %>
-            <div class="ml-24"></div>
-          <% end %>
-        </li>
       </ul>
     </nav>
   </footer>
