@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   get "/search", to: "search#index"
   get "/search/api_search", to: "search#api_search"
+
+  get "/info", to: "info#show"
 end

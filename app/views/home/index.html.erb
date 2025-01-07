@@ -1,4 +1,5 @@
-<div class="h-screen flex flex-col bg-gray-50" data-controller="zoom">
+<div class="h-screen flex flex-col bg-gray-50"
+     data-controller="zoom">
   <header class="flex-none text-center mt-6">
     <h1 class="font-bold text-4xl mb-1">Astronomy Picture of the Day</h1>
     <h2 class="font-bold text-xl text-gray-400">By NASA</h2>
@@ -97,7 +98,7 @@
           <% end %>
         </li>
         <li>
-          <%= link_to root_path, class:"btn ml-3" do %>
+          <%= link_to root_path, class:"btn ml-3", data: {action: "click->zoom#infoOpen"} do %>
             <i class="fa-solid fa-circle-info text-2xl"></i>
           <% end %>
         </li>
@@ -107,13 +108,22 @@
   </footer>
 
   <div data-zoom-target="modal"
-      data-action="click->zoom#close"
-      class="fixed inset-0 bg-black bg-opacity-85 backdrop-blur-md items-center justify-center hidden">
+       data-action="click->zoom#close"
+       class="fixed inset-0 bg-black bg-opacity-85 backdrop-blur-md items-center justify-center hidden">
     <div class="relative">
-      <img
-        class="w-auto h-auto max-w-[calc(100vw-4rem)] max-h-[calc(100vh-4rem)] object-contain"
-        src="<%= @apod_data['url'] %>"
-        data-zoom-target="zoomedImage">
+      <img class="w-auto h-auto max-w-[calc(100vw-4rem)] max-h-[calc(100vh-4rem)] object-contain"
+           src="<%= @apod_data['url'] %>"
+           data-zoom-target="zoomedImage">
     </div>
   </div>
+
+  <div class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center hidden"
+      data-zoom-target="infoModal"
+      data-action="click->zoom#infoClose">
+    <div class="bg-white rounded-lg max-w-md w-full p-6">
+      <h2 class="text-xl font-bold mb-4">Worth to Check</h2>
+      <p>Bla Bla Bla Github bla bla bla APOD official website</p>
+    </div>
+  </div>
+
 </div>
