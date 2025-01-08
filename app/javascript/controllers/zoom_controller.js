@@ -1,7 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['modal', 'zoomedImage', 'image', 'infoModal']
+  static targets = ['modal', 'zoomedImage', 'image', 'infoModal', 'childModal']
+
+  connect() {
+    console.log("Hello?")
+  }
 
   open(e) {
     e.preventDefault();
@@ -13,6 +17,8 @@ export default class extends Controller {
       const src = this.imageTarget.getAttribute("src");
       this.zoomedImageTarget.setAttribute("src", src)
     }
+
+    console.log("Hello?")
   }
 
   close(e) {
@@ -26,13 +32,20 @@ export default class extends Controller {
     e.preventDefault();
 
     this.infoModalTarget.classList.remove("hidden");
-    this.infoModalTarget.classList.add("flex");
+    // this.infoModalTarget.classList.add("flex");
+
+    // this.childModalTarget.classList.remove("hidden");
+    this.childModalTarget.classList.remove("hidden");
+    this.childModalTarget.classList.add("test")
   }
 
   infoClose(e) {
     if (e.target === this.infoModalTarget || e.target.dataset.action === "click->zoom#infoClose") {
       this.infoModalTarget.classList.add("hidden");
-      this.infoModalTarget.classList.remove("flex")
-    }
+      // this.infoModalTarget.classList.remove("flex")
+
+      // this.childModalTarget.classList.add("hidden");
+      this.childModalTarget.classList.remove("test");
+      this.childModalTarget.classList.add("hidden");    }
   }
 }
