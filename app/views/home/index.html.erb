@@ -19,21 +19,23 @@
         </svg>
       </a>
 
-      <div class="w-auto aspect-video overflow-hidden rounded-md shadow-sm mx-4" data-action="click->zoom#open">
-        <% if @apod_data['url'].include?("youtube") %>
+      <% if @apod_data['url'].include?("youtube") || @apod_data['url'].include?("vimeo") %>
+        <div class="aspect-video w-full overflow-hidden rounded-md shadow-sm mx-4" data-action="click->zoom#open">
           <iframe
             class="w-full h-full"
             src="<%= @apod_data['url'] %>"
             allowfullscreen>
           </iframe>
-        <% else %>
+        </div>
+      <% else %>
+        <div class="aspect-video w-full flex items-center justify-center overflow-hidden rounded-md shadow-sm mx-4" data-action="click->zoom#open">
           <img
-            class="object-cover w-full h-full"
+            class="max-w-full max-h-full object-contain"
             src="<%= @apod_data['url'] %>"
             alt="APOD Image"
             data-zoom-target="image">
-        <% end %>
-      </div>
+        </div>
+      <% end %>
 
       <% if @apod_data['date'].to_date < Date.today %>
         <a href="<%= apod_date_path((@apod_data['date'].to_date + 1).to_s) %>"
