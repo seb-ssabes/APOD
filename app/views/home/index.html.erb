@@ -1,7 +1,9 @@
 <div class="h-screen flex flex-col bg-gray-50"
      data-controller="zoom">
   <header class="flex-none text-center mt-6">
-    <h1 class="font-bold text-4xl mb-1">Astronomy Picture of the Day</h1>
+    <h1 class="font-bold text-4xl">
+      <%= link_to "Astronomy Picture of the Day", root_path %>
+    </h1>
     <h2 class="font-bold text-xl text-gray-400">By NASA</h2>
   </header>
 
@@ -28,9 +30,9 @@
           </iframe>
         </div>
       <% else %>
-        <div class="aspect-video w-full flex items-center justify-center overflow-hidden rounded-md shadow-sm mx-4" data-action="click->zoom#open">
+        <div class="aspect-video w-full overflow-hidden rounded-md shadow-sm mx-4" data-action="click->zoom#open">
           <img
-            class="max-w-full max-h-full object-contain"
+            class="h-full w-full object-cover"
             src="<%= @apod_data['url'] %>"
             alt="APOD Image"
             data-zoom-target="image">
