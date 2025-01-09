@@ -32,20 +32,22 @@ export default class extends Controller {
     e.preventDefault();
 
     this.infoModalTarget.classList.remove("hidden");
-    // this.infoModalTarget.classList.add("flex");
+    this.infoModalTarget.classList.add("flex");
 
-    // this.childModalTarget.classList.remove("hidden");
-    this.childModalTarget.classList.remove("hidden");
-    this.childModalTarget.classList.add("test")
+    this.childModalTarget.style.opacity = '';
+    this.childModalTarget.style.transform = '';
+
+    requestAnimationFrame(() => {
+      this.childModalTarget.classList.add("test")
+    })
   }
 
   infoClose(e) {
     if (e.target === this.infoModalTarget || e.target.dataset.action === "click->zoom#infoClose") {
       this.infoModalTarget.classList.add("hidden");
-      // this.infoModalTarget.classList.remove("flex")
+      this.infoModalTarget.classList.remove("flex")
 
-      // this.childModalTarget.classList.add("hidden");
       this.childModalTarget.classList.remove("test");
-      this.childModalTarget.classList.add("hidden");    }
+    }
   }
 }
