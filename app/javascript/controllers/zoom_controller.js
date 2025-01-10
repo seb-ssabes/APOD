@@ -1,31 +1,43 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['modal', 'zoomedImage', 'image', 'infoModal', 'childModal']
+  static targets = ['zoomModal', 'zoomedImage', 'image', 'infoModal', 'childModal', 'childZoomModal']
 
   connect() {
-    console.log("Hello?")
   }
 
   open(e) {
     e.preventDefault();
 
-    this.modalTarget.classList.remove("hidden");
-    this.modalTarget.classList.add("flex");
+    this.zoomModalTarget.classList.remove("hidden");
+    this.zoomModalTarget.classList.add("flex");
+
+    requestAnimationFrame(() => {
+      this.zoomModalTarget.classList.add("zoom-modal-effect");
+    });
+
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        this.childZoomModalTarget.classList.add("zoom-modal-effect");
+      });
+    }, 800);
 
     if (this.hasImageTarget) {
       const src = this.imageTarget.getAttribute("src");
-      this.zoomedImageTarget.setAttribute("src", src)
+      this.zoomedImageTarget.setAttribute("src", src);
     }
-
-    console.log("Hello?")
   }
 
   close(e) {
-    if (e.target === this.ModalTarget || e.target.dataset.action === "click->zoom#close") {
-      this.modalTarget.classList.add("hidden");
-      this.modalTarget.classList.remove("flex")
+    if (e.target === this.zoomModalTarget || e.target.dataset.action === "click->zoom#close") {
+      this.childZoomModalTarget.classList.remove("zoom-modal-effect");
     }
+
+    this.zoomModalTarget.classList.remove("zoom-modal-effect");
+
+    setTimeout(() => {
+      this.zoomModalTarget.classList.add("hidden");
+    }, 1000);
   }
 
   infoOpen(e) {
@@ -34,20 +46,26 @@ export default class extends Controller {
     this.infoModalTarget.classList.remove("hidden");
     this.infoModalTarget.classList.add("flex");
 
-    this.childModalTarget.style.opacity = '';
-    this.childModalTarget.style.transform = '';
-
     requestAnimationFrame(() => {
-      this.childModalTarget.classList.add("test")
+      this.infoModalTarget.classList.add("info-modal-effect");
     })
+
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        this.childModalTarget.classList.add("info-modal-effect");
+      });
+    }, 800);
   }
 
   infoClose(e) {
     if (e.target === this.infoModalTarget || e.target.dataset.action === "click->zoom#infoClose") {
-      this.infoModalTarget.classList.add("hidden");
-      this.infoModalTarget.classList.remove("flex")
+      this.childModalTarget.classList.remove("info-modal-effect");
 
-      this.childModalTarget.classList.remove("test");
+      this.infoModalTarget.classList.remove("info-modal-effect");
+
+      setTimeout(() => {
+        this.infoModalTarget.classList.add("hidden");
+      }, 1000);
     }
   }
 }

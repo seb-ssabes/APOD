@@ -6,6 +6,9 @@
     <h2 class="font-bold text-xl text-gray-400">Search</h2>
   </header>
 
+  <p class="text-sm text-gray-400 mb-2 mt-5 flex justify-center items-center">Search by date using the format:  <strong> YYYY-MM-DD </strong>  (e.g., 2022-04-29)</p>
+
+
   <div class="relative w-full max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
     <form class="search-form items"
           data-action="submit->search#submitSearch">
@@ -16,7 +19,7 @@
         </button>
         <input type="text"
               data-search-target="input"
-              placeholder="By title, description or copyright..."
+              placeholder="By title, description, date or copyright..."
               autocomplete="off"
               class="w-full pr-3 pl-11 py-2 border border-gray-300 rounded outline-none focus:ring-0 hover:border-gray-400 focus:border-gray-600"/>
       </div>
@@ -24,7 +27,7 @@
   </div>
 
   <div data-search-target="totalMatches" class="text-gray-600 my-7 flex self-center"></div>
-  <div data-search-target="searchResults" class="mt-4 flex flex-col items-center mx-96"></div>
+  <div data-search-target="searchResults" class="mt-4 flex flex-col items-center mx-auto w-full max-w-[50%] lg:max-w-[50%] md:max-w-[60%] sm:max-w-[90%]"></div>
   <div data-search-target="pagination" class="my-7 flex justify-center items-center gap-2"></div>
 
 </div>
