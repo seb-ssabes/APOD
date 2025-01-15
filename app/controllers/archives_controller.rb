@@ -22,8 +22,7 @@ class ArchivesController < ApplicationController
   def fetch_range_data(start_date, end_date)
     api_key = Rails.application.credentials.dig(:APOD, :api_key)
     url = "https://api.nasa.gov/planetary/apod?api_key=#{api_key}&start_date=#{start_date}&end_date=#{end_date}"
-    # Rails.logger.info "Fetching URL: #{url}"
-    
+
     response = URI.open(url).read
     @apod_data = JSON.parse(response).reverse
   end

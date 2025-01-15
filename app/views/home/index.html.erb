@@ -60,9 +60,12 @@
 
       <div class="px-8">
         <%= @apod_data['explanation'] %>
+      </div>
+      
+      <div class="mt-5 px-8">
         <% if @apod_data['copyright'].present? %>
           <% if @apod_data['copyright'].include?(",") %>
-            <div class="font-bold text-lg text-gray-500 mb-4">
+            <div class="font-bold text-lg text-gray-500">
               <i class="fa-regular fa-copyright text-sm"></i>
               <%= @apod_data['copyright'] %>
             </div>
@@ -78,10 +81,7 @@
         <% end %>
       </div>
 
-
-
     </div>
-
   </div>
 
 

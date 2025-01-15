@@ -11,6 +11,10 @@ class HomeController < ApplicationController
 
     response = URI.open(url).read
     @apod_data = JSON.parse(response)
+
+    @apod_data['explanation'] = @apod_data['explanation'].split(/ {3,}/).first
+
+    Rails.logger.info "APOD Copyright Field: #{@apod_data['copyright'] || 'Missing'}"
     Rails.logger.info "APOD Data: #{@apod_data.inspect}"
   end
 end
