@@ -6,9 +6,6 @@ export default class extends Controller {
   static targets = ['output'];
 
   connect() {
-    console.log("Hello?")
-    // this.element.textContent = "";
-
     if (this.element.dataset.typedInitialized === "true") {
       return;
     }

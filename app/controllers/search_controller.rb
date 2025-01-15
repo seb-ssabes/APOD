@@ -8,17 +8,25 @@ class SearchController < ApplicationController
 
   def api_search
     query = params[:query].downcase
-    date = params[:date]
 
-    apod_data = fetch_data(date)
+    is_date = false
+    date_query = nil
 
-    if date.present?
-      filtered_results = apod_data
+    begin
+      date_query = Date.parse(query).strftime('%Y-%m-%d')
+      is_date = true
+    rescue ArgumentError
+    end
+
+    if is_date
+      apod_data = fetch_data(date_query)
+      filtered_results = apod_data ? [apod_data] : []
     else
+      apod_data = fetch_data(nil, 50)
       filtered_results = filter_data(apod_data, query)
     end
 
-    limited_results = filtered_results.take(60)
+    limited_results = filtered_results.take(50)
 
     render json: {
       filtered_results: limited_results,
@@ -31,7 +39,7 @@ class SearchController < ApplicationController
 
   private
 
-  def fetch_data(date = nil, limit = 60)
+  def fetch_data(date = nil, limit = 50)
     api_key = Rails.application.credentials.dig(:APOD, :api_key)
 
     if date
