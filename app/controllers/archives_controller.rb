@@ -3,7 +3,7 @@ require 'json'
 
 class ArchivesController < ApplicationController
   def index
-    per_page = 30
+    per_page = 14
     page = params[:page].present? ? params[:page].to_i : 0
 
     if page == 0

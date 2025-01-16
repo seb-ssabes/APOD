@@ -33,3 +33,10 @@
 .child-zoom-modal.zoom-modal-effect {
   opacity: 1;
 }
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}

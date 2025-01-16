@@ -6,29 +6,43 @@
     <h2 class="font-bold text-xl text-gray-400">Archive</h2>
   </header>
 
-  <div class="flex flex-col items-center justify-between mt-4">
+  <div class="flex flex-col items-center justify-between mt-8">
     <div class="grid grid-cols-2 gap-6 w-full max-w-6xl px-4 flex-grow">
-      <% @apod_data.each_slice(15).to_a.each_with_index do |group, index| %>
+      <% @apod_data.each_slice(7).to_a.each_with_index do |group, index| %>
         <div>
           <% group.each do |data| %>
-            <div class="border-b pb-2 mb-2">
-              <p>
-                <%= data['date'] %>:
-                <%= link_to data["title"], apod_date_path(data['date']), class: "text-gray-500 hover:underline" %>
-              </p>
+
+            <div class="flex flex-row items-center gap-4 border-b pb-2 mb-2 w-full">
+              <div class="media flex-shrink-0">
+                <% if data['url'].include?('youtube') || data['url'].include?('vimeo') %>
+                  <div class="w-16 h-16 flex items-center justify-center rounded-md">
+                    <i class="fa-brands fa-square-youtube text-red-400" style="font-size: 4.5rem;"></i>
+                  </div>
+                <% else %>
+                  <img src="<%= data['url']%>" class="w-16 h-16 object-cover rounded-md">
+                <% end %>
+              </div>
+
+              <div class="text-start w-full flex flex-col min-w-0">
+                <h3 class="text-lg font-bold text-gray-700">
+                  <%= link_to data["title"], apod_date_path(data['date']),
+                      class: "hover:text-gray-500 hover:underline inline-block ellipsis" %>
+                </h3>
+                <div class="text-sm text-gray-400"><%= data['date'] %></div>
+              </div>
             </div>
+
           <% end %>
         </div>
       <% end %>
-      </div>
+    </div>
 
 
-      <div class="flex flex-row mt-10">
-        <%= link_to "Previous 30 days", archives_path(page: params[:page].to_i + 1), class: "btn" %>
-        <% if params[:page].to_i > 0 %>
-          <%= link_to "Next 30 days", archives_path(page: params[:page].to_i - 1), class: "btn ml-3" %>
-        <% end %>
+    <div class="flex flex-row my-10">
+      <%= link_to "Previous 14 days", archives_path(page: params[:page].to_i + 1), class: "btn" %>
+      <% if params[:page].to_i > 0 %>
+        <%= link_to "Next 14 days", archives_path(page: params[:page].to_i - 1), class: "btn ml-3" %>
+      <% end %>
     </div>
   </div>
-
 </div>
