@@ -1,5 +1,18 @@
 @import 'font-awesome';
 
+.changa {
+  font-family: "Changa", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.bungee {
+  font-family: "Bungee Shade", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .info-modal {
   opacity: 0;
   transition: opacity 0.8s ease-in-out;
