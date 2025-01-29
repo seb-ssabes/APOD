@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['input', 'searchResults', 'pagination', 'totalMatches', 'dataContainer']
+  static targets = ['input', 'searchResults', 'pagination', 'totalMatches', 'dataContainer', 'spinner']
 
   connect() {
     this.cachedResults = [];
@@ -10,6 +10,8 @@ export default class extends Controller {
 
   submitSearch(event, page = 1) {
     event.preventDefault();
+
+    this.spinnerTarget.classList.remove('hidden')
 
     const query = this.inputTarget.value.trim().toLowerCase();
     if (query.length > 0) {
@@ -51,48 +53,47 @@ export default class extends Controller {
     return results.slice(startIndex, startIndex + itemsPerPage)
   }
 
-  updateResults(data) {
-    this.totalMatchesTarget.classList.remove("showup", "opacity-100");
-    this.searchResultsTarget.classList.remove("showup", "opacity-100");
-    this.paginationTarget.classList.remove("showup", "opacity-100");
+  updateResults(data, isNewSearch = true) {
 
-      setTimeout(() => { //re-trigger animations smoothly.
-        this.searchResultsTarget.innerHTML = data.map((item) => {
+    if (isNewSearch) {
+      this.totalMatchesTarget.classList.remove("showup", "opacity-100");
+      this.searchResultsTarget.classList.remove("showup", "opacity-100");
+      this.paginationTarget.classList.remove("showup", "opacity-100");
+    }
 
-          const truncatedExplanation = item.explanation ? item.explanation.split(" ").slice(0, 20).join(' ') + "..." : "";
-          const youtubeIcon = `
-          <div class="w-16 h-16 flex items-center justify-center rounded-md">
-          <i class="fa-brands fa-square-youtube text-red-400" style="font-size: 4.5rem;"></i>
+    setTimeout(() => { //re-trigger animations smoothly.
+      this.searchResultsTarget.innerHTML = data.map((item) => {
+
+        const truncatedExplanation = item.explanation ? item.explanation.split(" ").slice(0, 20).join(' ') + "..." : "";
+        const youtubeIcon = `
+        <div class="w-16 h-16 flex items-center justify-center rounded-md">
+        <i class="fa-brands fa-square-youtube text-red-400" style="font-size: 4.5rem;"></i>
+        </div>
+        `;
+      const imageTag = `<img src="${item.url}" class="w-16 h-16 object-cover rounded-md">`;
+      const conditionalImage = item.url.includes("youtube") || item.url.includes("vimeo") ? youtubeIcon : imageTag;
+
+      return `
+        <div class="search-result flex flex-row items-center gap-4 border-b pb-2 mb-2 w-full">
+        <div class="media flex-shrink-0">${conditionalImage}</div>
+          <div class="text-start w-full flex flex-col">
+            <h3 class="text-lg font-bold text-gray-700">
+            <a href="/apod/${item.date}" class="hover:text-gray-500 hover:underline">${item.title}</a>
+            </h3>
+            <p class="text-gray-500">${truncatedExplanation}</p>
+            <p class="text-sm text-gray-400"><small>${item.date}</small></p>
           </div>
-          `;
-        const imageTag = `<img src="${item.url}" class="w-16 h-16 object-cover rounded-md">`;
-        const conditionalImage = item.url.includes("youtube") || item.url.includes("vimeo") ? youtubeIcon : imageTag;
-
-        return `
-          <div class="search-result flex flex-row items-center gap-4 border-b pb-2 mb-2 w-full">
-          <div class="media flex-shrink-0">${conditionalImage}</div>
-            <div class="text-start w-full flex flex-col">
-              <h3 class="text-lg font-bold text-gray-700">
-              <a href="/apod/${item.date}" class="hover:text-gray-500 hover:underline">${item.title}</a>
-              </h3>
-              <p class="text-gray-500">${truncatedExplanation}</p>
-              <p class="text-sm text-gray-400"><small>${item.date}</small></p>
-            </div>
-            </div>`
+          </div>`
       }).join("");
 
-      setTimeout(() => {
-        this.totalMatchesTarget.classList.add("showup");
-      }, 300);
+      this.spinnerTarget.classList.add('hidden');
 
-      setTimeout(() => {
-        this.searchResultsTarget.classList.add("showup");
-      }, 800);
-
-      setTimeout(() => {
-        this.paginationTarget.classList.add("showup");
-      }, 2000);
-    }, 100);
+      if (isNewSearch) {
+        setTimeout(() => this.totalMatchesTarget.classList.add("showup"), 300);
+        setTimeout(() => this.searchResultsTarget.classList.add("showup"), 800);
+        setTimeout(() => this.paginationTarget.classList.add("showup"), 2000);
+      }
+    }, isNewSearch ? 100 : 0);
   }
 
   displayTotal(totalMatches) {
@@ -125,7 +126,7 @@ export default class extends Controller {
     pageButtons.forEach((button) => {
       button.addEventListener("click", (e) => {
         const page = parseInt(e.target.dataset.page, 10);
-        this.updateResults(this.paginateResults(this.cachedResults, page));
+        this.updateResults(this.paginateResults(this.cachedResults, page), false);
         this.updatePagination(totalPages, page, query);
       })
     })

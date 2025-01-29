@@ -22,11 +22,17 @@
               placeholder="By title, description, date or copyright..."
               autocomplete="off"
               class="w-full pr-3 pl-11 py-2 border border-gray-300 rounded outline-none focus:ring-0 hover:border-gray-400 focus:border-gray-600"/>
+        <div data-search-target="spinner" class="hidden absolute right-3 top-1/2 transform -translate-y-1/2">
+          <i class="fa-solid fa-spinner animate-spin text-gray-500 text-xl"></i>
+        </div>
       </div>
     </form>
   </div>
 
   <div data-search-target="dataContainer" class="">
+    <div data-search-target="spinner" class="hidden text-gray-500 text-center my-4">
+      <i class="fa-solid fa-spinner animate-spin text-5xl"></i>
+    </div>
     <div data-search-target="totalMatches" class="text-gray-600 my-7 flex justify-center items-center opacity-0 transition-transform translate-x-20"></div>
     <div data-search-target="searchResults" class="mt-4 flex flex-col items-center mx-auto w-full max-w-[50%] lg:max-w-[50%] md:max-w-[60%] sm:max-w-[90%] opacity-0 transition-transform translate-x-20"></div>
     <div data-search-target="pagination" class="my-7 flex justify-center items-center gap-2 opacity-0 transition-transform translate-x-20"></div>
