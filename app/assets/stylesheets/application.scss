@@ -53,3 +53,16 @@
   text-overflow: ellipsis;
   width: 100%;
 }
+
+.showup {
+  opacity: 100;
+  // position: absolute;
+  // overflow: hidden;
+  // padding: 20px;
+  // top: -20px;
+  // border-radius: 2px;
+  transition: all 1.5s;
+  transform: translateX(0);
+  will-change: opacity;
+  // display: none;
+}

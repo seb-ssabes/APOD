@@ -13,7 +13,7 @@ class HomeController < ApplicationController
     @apod_data = JSON.parse(response)
 
     if !@apod_data['explanation'].downcase.include?("explanation")
-      @apod_data['explanation'] = @apod_data['explanation'].split(/ {3,}/).first
+      @apod_data['explanation'] = @apod_data['explanation'].split(/ {4,}/).first
     end
 
     Rails.logger.info "APOD Copyright Field: #{@apod_data['copyright'] || 'Missing'}"

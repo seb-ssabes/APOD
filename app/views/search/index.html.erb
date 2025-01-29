@@ -26,8 +26,10 @@
     </form>
   </div>
 
-  <div data-search-target="totalMatches" class="text-gray-600 my-7 flex self-center"></div>
-  <div data-search-target="searchResults" class="mt-4 flex flex-col items-center mx-auto w-full max-w-[50%] lg:max-w-[50%] md:max-w-[60%] sm:max-w-[90%]"></div>
-  <div data-search-target="pagination" class="my-7 flex justify-center items-center gap-2"></div>
+  <div data-search-target="dataContainer" class="">
+    <div data-search-target="totalMatches" class="text-gray-600 my-7 flex justify-center items-center opacity-0 transition-transform translate-x-20"></div>
+    <div data-search-target="searchResults" class="mt-4 flex flex-col items-center mx-auto w-full max-w-[50%] lg:max-w-[50%] md:max-w-[60%] sm:max-w-[90%] opacity-0 transition-transform translate-x-20"></div>
+    <div data-search-target="pagination" class="my-7 flex justify-center items-center gap-2 opacity-0 transition-transform translate-x-20"></div>
+  </div>
 
 </div>
