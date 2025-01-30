@@ -94,6 +94,9 @@ export default class extends Controller {
         setTimeout(() => this.paginationTarget.classList.add("showup"), 2000);
       }
     }, isNewSearch ? 100 : 0);
+
+    console.log("API Response:", data);
+    console.log("Total Matches:", data.totalMatches);
   }
 
   displayTotal(totalMatches) {

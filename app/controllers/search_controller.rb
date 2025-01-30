@@ -6,20 +6,13 @@ class SearchController < ApplicationController
 
   end
 
+
+
   def api_search
-    query = params[:query].downcase
+    query = params[:query].to_s.strip.downcase
 
-    is_date = false
-    date_query = nil
-
-    begin
-      date_query = Date.parse(query).strftime('%Y-%m-%d')
-      is_date = true
-    rescue ArgumentError
-    end
-
-    if is_date
-      apod_data = fetch_data(date_query)
+    if valid_date_format?(query)
+      apod_data = fetch_data(query)
       filtered_results = apod_data ? [apod_data] : []
     else
       apod_data = fetch_data(nil, 50)
@@ -48,12 +41,19 @@ class SearchController < ApplicationController
       url = "https://api.nasa.gov/planetary/apod?api_key=#{api_key}&count=#{limit}"
     end
 
-    response = URI.open(url).read
-    JSON.parse(response)
+    Rails.logger.debug "Requesting URL: #{url}"
+
+    begin
+      response = URI.open(url).read
+      JSON.parse(response)
+    rescue OpenURI::HTTPError => e
+      Rails.logger.error "NASA API Error: #{e.message}"
+      return []
+    end
   end
 
   def filter_data(apod_data, query)
-    query = query.downcase
+    query = query.to_s.downcase
 
     apod_data = [apod_data] unless apod_data.is_a?(Array)
 
@@ -62,5 +62,9 @@ class SearchController < ApplicationController
       item['explanation'].to_s.downcase.include?(query) ||
       item['copyright'].to_s.downcase.include?(query)
     end
+  end
+
+  def valid_date_format?(query)
+    query.match?(/\A\d{4}-\d{2}-\d{2}\z/)
   end
 end
