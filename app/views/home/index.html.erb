@@ -57,7 +57,7 @@
     </div>
 
     <div class="w-1/2 text-left">
-      <h1 class="font-bold text-4xl mb-2 text-center changa"><%= @apod_data['title'] %></h1>
+      <h1 class="font-bold text-4xl mb-4 text-center changa"><%= @apod_data['title'] %></h1>
 
       <div class="pl-8 pr-12">
         <%= @apod_data['explanation'] %>
@@ -88,28 +88,27 @@
 
   <footer class="flex-none py-4">
     <nav class="container mx-auto flex justify-center">
-      <ul class="flex gap-4">
+      <ul class="flex gap-x-4">
         <li>
-          <%= link_to archives_path, class:"btn ml-3" do %>
+          <%= link_to archives_path, class:"btn w-16 h-10 flex items-center justify-center" do %>
             <i class="fa-regular fa-folder-open text-2xl"></i>
           <% end %>
         </li>
         <li>
-          <%= link_to search_path, class:"btn ml-3" do %>
+          <%= link_to search_path, class:"btn w-16 h-10 flex items-center justify-center" do %>
             <i class="fa-brands fa-searchengin text-2xl"></i>
           <% end %>
         </li>
         <li>
-          <%= link_to root_path, class:"btn ml-3", data: {action: "click->zoom#open"} do %>
+          <%= link_to root_path, class:"btn w-16 h-10 flex items-center justify-center", data: {action: "click->zoom#open"} do %>
             <i class="fa-solid fa-expand text-2xl"></i>
           <% end %>
         </li>
         <li>
-          <%= link_to root_path, class:"btn ml-3", data: {action: "click->zoom#infoOpen"} do %>
+          <%= link_to root_path, class:"btn w-16 h-10 flex items-center justify-center", data: {action: "click->zoom#infoOpen"} do %>
             <i class="fa-solid fa-circle-info text-2xl"></i>
           <% end %>
         </li>
-
       </ul>
     </nav>
   </footer>

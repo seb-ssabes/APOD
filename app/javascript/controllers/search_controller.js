@@ -78,7 +78,7 @@ export default class extends Controller {
         <div class="media flex-shrink-0">${conditionalImage}</div>
           <div class="text-start w-full flex flex-col">
             <h3 class="text-lg font-bold text-gray-700">
-            <a href="/apod/${item.date}" class="hover:text-gray-500 hover:underline">${item.title}</a>
+            <a href="/apod/${item.date}" class="hover:text-gray-500 hover:underline changa text-xl">${item.title}</a>
             </h3>
             <p class="text-gray-500">${truncatedExplanation}</p>
             <p class="text-sm text-gray-400"><small>${item.date}</small></p>
