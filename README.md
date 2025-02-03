@@ -1,5 +1,5 @@
 <h1 align="center">
-  NASA's Astronomy Picture of the Day (APOD)
+  NASA's Astronomy Picture of the Day (**APOD**)
 </h1>
 
 # Introduction
