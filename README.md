@@ -5,6 +5,8 @@
 # Introduction
 I wanted to build a project where I could practice working with and fetching data from REST APIs. I chose NASA’s Astronomy Picture of the Day (APOD) API because it combines technology with the fascinating world of astronomy. This project allowed me to explore API integration while showcasing stunning images of our universe.
 
+**NOTE:**This project is hosted on Render.com's free tier, which means the server goes to sleep after periods of inactivity. As a result, the initial response may take **up to 1 minute** while the instance spins back up. Once running, the app performs normally.
+
 # About the App
 APOD lets you browse NASA’s Astronomy Picture of the Day from today all the way back to June 20, 1995. You are able to:
 
