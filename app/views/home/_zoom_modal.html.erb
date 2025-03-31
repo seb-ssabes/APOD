@@ -1,0 +1,22 @@
+  <div data-zoom-target="zoomModal"
+       data-action="click->zoom#close"
+       class="zoom-modal fixed inset-0 bg-black bg-opacity-85 backdrop-blur-md items-center justify-center hidden opacity-0">
+    <div class="child-zoom-modal relative opacity-0"
+         data-zoom-target="childZoomModal">
+      <% if @apod_data['url'].include?("youtube") || @apod_data['url'].include?("vimeo")  %>
+        <div class="w-[90vw] max-w-[1000px] h-auto">
+          <div class="relative w-full aspect-video">
+            <iframe
+                class="absolute inset-0 w-full h-full"
+                src="<%= @apod_data['url'] %>"
+                allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      <% else %>
+        <img class="w-auto h-auto max-w-[calc(100vw-4rem)] max-h-[calc(100vh-4rem)] object-contain"
+            src="<%= @apod_data['url'] %>"
+            data-zoom-target="zoomedImage">
+      <% end %>
+    </div>
+  </div>
