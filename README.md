@@ -5,7 +5,8 @@
 # Important Note
 This project is hosted on Render.com's free tier, which means the server goes to sleep after periods of inactivity. As a result, the initial response may take **up to 1 minute** while the instance spins back up. Once running, the app performs normally. In other words, please be patient the first time you visit this link:
 
-[https://apod-me6r.onrender.com/](url)
+[https://apod-me6r.onrender.com](url)
+If the hyperlink doesn't work, please try copy-pasting the link into your browser.
 
 # Introduction
 I wanted to build a project where I could practice working with and fetching data from REST APIs. I chose NASA’s Astronomy Picture of the Day (APOD) API because it combines technology with the fascinating world of astronomy. This project allowed me to explore API integration while showcasing stunning images of our universe.
