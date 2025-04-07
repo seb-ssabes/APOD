@@ -6,6 +6,7 @@
 This project is hosted on Render.com's free tier, which means the server goes to sleep after periods of inactivity. As a result, the initial response may take **up to 1 minute** while the instance spins back up. Once running, the app performs normally. In other words, please be patient the first time you visit this link:
 
 [https://apod-me6r.onrender.com](url)
+
 If the hyperlink doesn't work, please try copy-pasting the link into your browser.
 
 # Introduction
