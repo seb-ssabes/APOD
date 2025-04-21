@@ -72,16 +72,23 @@
             </div>
           <% else %>
             <div data-controller="typed"
-                data-typed-strings-value='["<%= j @apod_data['copyright'] %>"]'
-                data-typed-initialized="false"
-                class="font-bold text-lg text-gray-500 mb-4">
+                 data-typed-strings-value='["<%= j @apod_data['copyright'] %>"]'
+                 data-typed-initialized="false"
+                 class="font-bold text-lg text-gray-500 mb-4">
               <i class="fa-regular fa-copyright text-sm"></i>
               <span data-typed-target="output"></span>
             </div>
           <% end %>
+        <% else %>
+          <div data-controller="typed"
+               data-typed-strings-value='["<%= j "NASA, ESA, CSA, STScl and partners." %>"]'
+               data-typed-initialized="false"
+               class="font-bold text-lg text-gray-500 mb-4">
+            <i class="fa-regular fa-copyright text-sm"></i>
+            <span data-typed-target="output"></span>
+          </div>
         <% end %>
       </div>
-
     </div>
   </div>
 
